@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Delper Humanitarian Architecture — Project Profile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F0E9D8;
+    --card:#FFFCF4;
+    --ink:#2B2118;
+    --wheat:#7A5C2E;
+    --wheat-lt:#9C7A3F;
+    --olive:#4B5F3A;
+    --olive-lt:#6B8752;
+    --clay:#A63D2F;
+    --line: rgba(43,33,24,.14);
+    --muted: rgba(43,33,24,.6);
+  }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:"Public Sans", -apple-system, sans-serif;
+    -webkit-font-smoothing:antialiased;
+    font-size:16px; line-height:1.65;
+  }
+  .display{ font-family:"Spectral", Georgia, serif; }
+  .mono{ font-family:"IBM Plex Mono", monospace; }
+  a{ color:inherit; }
+  .wrap{ max-width:900px; margin:0 auto; padding:0 28px; }
+  .wrap-wide{ max-width:1080px; margin:0 auto; padding:0 28px; }
+
+  @media (prefers-reduced-motion: reduce){ *{ animation-duration:.01ms !important; transition-duration:.01ms !important; } }
+
+  .doc-strip{
+    background:var(--ink); color:var(--paper);
+    font-family:"IBM Plex Mono",monospace; font-size:.68rem; letter-spacing:.08em;
+    padding:10px 28px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:6px;
+    text-transform:uppercase;
+  }
+  .doc-strip span{ opacity:.75; }
+
+  .cover{ padding:72px 0 56px; }
+  .cover-eyebrow{
+    font-family:"IBM Plex Mono",monospace; font-size:.72rem; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--olive); margin-bottom:18px; display:flex; align-items:center; gap:10px;
+  }
+  .cover-eyebrow::before{ content:""; width:22px; height:2px; background:var(--olive); }
+  h1.title{
+    font-family:"Spectral",serif; font-weight:600; font-size:clamp(2.3rem,5.4vw,3.4rem);
+    line-height:1.08; margin:0 0 18px; letter-spacing:-.01em;
+  }
+  h1.title em{ font-style:italic; color:var(--wheat); font-weight:500; }
+  .cover-lede{ font-size:1.08rem; color:var(--muted); max-width:620px; margin:0 0 40px; line-height:1.7; }
+
+  .ledger-card{
+    background:var(--card); border:1px solid var(--line); border-radius:4px;
+    box-shadow:0 18px 40px -18px rgba(43,33,24,.25);
+    max-width:560px; padding:0; overflow:hidden;
+  }
+  .ledger-head{
+    background:var(--ink); color:var(--paper); padding:18px 26px;
+    display:flex; justify-content:space-between; align-items:center;
+  }
+  .ledger-head .lbl{ font-family:"IBM Plex Mono",monospace; font-size:.68rem; letter-spacing:.12em; text-transform:uppercase; opacity:.7; }
+  .ledger-head .val{ font-family:"Spectral",serif; font-size:1.05rem; font-weight:600; }
+  .ledger-body{ padding:24px 26px 10px; }
+  .ledger-row{
+    display:flex; justify-content:space-between; align-items:baseline; padding:13px 0;
+    border-bottom:1px dashed var(--line);
+  }
+  .ledger-row:last-child{ border-bottom:none; }
+  .ledger-row .item{ font-size:.92rem; }
+  .ledger-row .item .sub{ display:block; font-size:.74rem; color:var(--muted); margin-top:2px; }
+  .ledger-row .amt{ font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:1rem; white-space:nowrap; padding-left:16px; }
+  .ledger-row.total{ border-top:2px solid var(--ink); border-bottom:none; margin-top:4px; padding-top:16px; }
+  .ledger-row.total .item{ font-weight:700; font-family:"Spectral",serif; font-size:1.05rem; }
+  .ledger-row.total .amt{ font-size:1.3rem; color:var(--wheat); }
+  .ledger-foot{
+    background:rgba(75,95,58,.08); padding:14px 26px; font-size:.76rem; color:var(--olive);
+    font-family:"IBM Plex Mono",monospace; letter-spacing:.02em;
+  }
+
+  section{ padding:60px 0; }
+  .sec-eyebrow{
+    font-family:"IBM Plex Mono",monospace; font-size:.7rem; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--olive); margin-bottom:12px;
+  }
+  h2{ font-family:"Spectral",serif; font-weight:600; font-size:clamp(1.6rem,3.2vw,2.1rem); margin:0 0 16px; letter-spacing:-.01em; }
+  .sec-lede{ color:var(--muted); font-size:1rem; max-width:680px; margin-bottom:40px; line-height:1.7; }
+  .rule{ width:44px; height:3px; background:var(--wheat); margin-bottom:28px; }
+
+  .pull{ border-left:3px solid var(--wheat); padding:20px 28px; margin:36px 0; background:rgba(122,92,46,.06); }
+  .pull p{ font-family:"Spectral",serif; font-style:italic; font-size:1.15rem; line-height:1.6; margin:0; color:var(--ink); }
+
+  .stat-strip{ display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin:32px 0; }
+  .stat{ background:var(--card); padding:22px 18px; text-align:center; }
+  .stat .num{ font-family:"Spectral",serif; font-weight:700; font-size:1.7rem; color:var(--wheat); line-height:1; }
+  .stat .lbl{ font-family:"IBM Plex Mono",monospace; font-size:.66rem; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); margin-top:8px; line-height:1.4; }
+
+  .card-grid{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  .info-card{ background:var(--card); border:1px solid var(--line); border-radius:4px; padding:26px 24px; }
+  .info-card .tag{ font-family:"IBM Plex Mono",monospace; font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; color:var(--wheat); margin-bottom:10px; }
+  .info-card h3{ font-family:"Spectral",serif; font-size:1.1rem; font-weight:600; margin:0 0 10px; }
+  .info-card p{ font-size:.9rem; color:var(--muted); line-height:1.65; margin:0; }
+  .info-card .figure{ font-family:"IBM Plex Mono",monospace; font-weight:600; color:var(--olive); }
+
+  .flow-compare{ display:grid; grid-template-columns:1fr 1fr; gap:24px; margin:32px 0; }
+  .flow-col{ background:var(--card); border:1px solid var(--line); border-radius:4px; padding:22px 22px; }
+  .flow-col.old{ opacity:.75; }
+  .flow-col.new{ border-color:var(--olive); box-shadow:0 0 0 1px var(--olive); }
+  .flow-col .flow-tag{ font-family:"IBM Plex Mono",monospace; font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; margin-bottom:14px; }
+  .flow-col.old .flow-tag{ color:var(--clay); }
+  .flow-col.new .flow-tag{ color:var(--olive); }
+  .flow-step{ font-size:.86rem; padding:8px 0; border-bottom:1px dashed var(--line); }
+  .flow-step:last-child{ border-bottom:none; font-weight:600; }
+
+  .tbl-wrap{ overflow-x:auto; margin:28px 0; }
+  table{ width:100%; border-collapse:collapse; font-size:.86rem; }
+  thead th{
+    font-family:"IBM Plex Mono",monospace; font-size:.66rem; letter-spacing:.08em; text-transform:uppercase;
+    text-align:left; padding:10px 14px; background:var(--ink); color:var(--paper); font-weight:600;
+  }
+  tbody td{ padding:12px 14px; border-bottom:1px solid var(--line); vertical-align:top; }
+  tbody tr:nth-child(odd){ background:var(--card); }
+  tbody tr.hi td{ font-weight:700; background:rgba(122,92,46,.1); border-top:2px solid var(--wheat); border-bottom:2px solid var(--wheat); }
+
+  .region-list{ display:flex; flex-direction:column; gap:2px; margin:28px 0; }
+  .region-row{ display:grid; grid-template-columns:180px 1fr 90px; gap:14px; align-items:center; padding:12px 16px; background:var(--card); border-bottom:1px solid var(--line); font-size:.86rem; }
+  .region-row .name{ font-weight:600; }
+  .region-row .detail{ color:var(--muted); }
+  .region-row .count{ font-family:"IBM Plex Mono",monospace; text-align:right; color:var(--olive); font-weight:600; }
+
+  .support-note{
+    background:rgba(43,33,24,.04); border:1px solid var(--line); border-radius:4px; padding:22px 24px; font-size:.88rem; color:var(--muted); line-height:1.7;
+  }
+  .support-note strong{ color:var(--ink); }
+
+  footer{ background:var(--ink); color:rgba(240,233,216,.6); padding:48px 0 60px; margin-top:20px; }
+  footer h4{ font-family:"Spectral",serif; color:var(--paper); font-size:1rem; margin:0 0 14px; }
+  footer p{ font-size:.76rem; line-height:1.8; margin:0 0 14px; }
+  footer .meta{ font-family:"IBM Plex Mono",monospace; font-size:.7rem; letter-spacing:.08em; color:rgba(240,233,216,.4); margin-top:24px; }
+
+  @media (max-width:760px){
+    .card-grid, .flow-compare{ grid-template-columns:1fr; }
+    .stat-strip{ grid-template-columns:1fr 1fr; }
+    .region-row{ grid-template-columns:1fr; text-align:left; }
+    .region-row .count{ text-align:left; }
+  }
+</style>
+</head>
+<body>
+
+<div class="doc-strip">
+  <span><a href="https://gkbharta44-code.github.io/Delper-Ecom-Story/" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">Delper GCCP Holdings</a> · Singapore</span>
+  <span>Project Profile — Humanitarian Architecture · July 2026 · Aligned to v10.3</span>
+</div>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="wrap">
+    <div class="cover-eyebrow">Project Profile</div>
+    <h1 class="title">Zero Hunger.<br>Zero Rent.<br><em>Six Billion People.</em></h1>
+    <p class="cover-lede">Delper's humanitarian commitment is not a programme layered onto a business — it is the business. Every advertiser, every supply-chain fee, every token transaction is designed to fund $247 a month to every resident, delivered as free housing, free staple food, and a verified digital identity, starting from Year 4.</p>
+
+    <div class="ledger-card">
+      <div class="ledger-head">
+        <span class="lbl">Resident Benefit Ledger</span>
+        <span class="val">Monthly · Per Resident</span>
+      </div>
+      <div class="ledger-body">
+        <div class="ledger-row">
+          <div class="item">DPR Wallet Credit<span class="sub">Ad &amp; survey mediation — $83.33/user/month × 6B users, tax-free at resident level</span></div>
+          <div class="amt">$83</div>
+        </div>
+        <div class="ledger-row">
+          <div class="item">Housing<span class="sub">Zero-rent residential unit, platform-owned in perpetuity</span></div>
+          <div class="amt">$82</div>
+        </div>
+        <div class="ledger-row">
+          <div class="item">Staple Food<span class="sub">Food Sovereignty Programme — $30/person/month wholesale, 96M smallholder farms</span></div>
+          <div class="amt">$82</div>
+        </div>
+        <div class="ledger-row total">
+          <div class="item">Total Monthly Benefit</div>
+          <div class="amt">$247</div>
+        </div>
+      </div>
+      <div class="ledger-foot">Funded from Year 4 · Derived from $10.62T/yr digital ad revenue · No subscription · No fee · No data sold</div>
+    </div>
+  </div>
+</div>
+
+<!-- MISSION -->
+<section>
+  <div class="wrap">
+    <div class="sec-eyebrow">The Mission</div>
+    <h2>Humanitarian by architecture, not by intention</h2>
+    <div class="rule"></div>
+    <p style="color:var(--ink);line-height:1.8;margin-bottom:24px">Every commerce platform built before Delper has extracted value from the people at the base of the economic pyramid — charging them to transact, charging them to access, charging them to participate. Delper inverts this. The supply chain that has always taxed the consumer invisibly, the advertisers who have always profited from consumer attention, and the token traders who benefit from consumer-driven liquidity all pay into a single pool, returned as income to the person actually using the platform.</p>
+
+    <div class="pull">
+      <p>"The decision to charge the supply chain rather than the user is the founding humanitarian act. It cannot be removed without destroying the business model entirely — human welfare and commercial return are not in tension. They are the same variable."</p>
+    </div>
+
+    <h3 style="font-family:'Spectral',serif;font-size:1.15rem;margin:36px 0 16px">The structural inversion</h3>
+    <div class="flow-compare">
+      <div class="flow-col old">
+        <div class="flow-tag">Every Other Platform</div>
+        <div class="flow-step">Advertiser pays the platform</div>
+        <div class="flow-step">Platform keeps the revenue</div>
+        <div class="flow-step">User receives a "free" service</div>
+        <div class="flow-step">The user is the product</div>
+      </div>
+      <div class="flow-col new">
+        <div class="flow-tag">Delper</div>
+        <div class="flow-step">Advertiser pays the platform</div>
+        <div class="flow-step">Platform passes the reward to the user</div>
+        <div class="flow-step">User transacts more, advertiser reaches more people</div>
+        <div class="flow-step">The user is the beneficiary</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOD SOVEREIGNTY -->
+<section style="background:rgba(75,95,58,.05)">
+  <div class="wrap">
+    <div class="sec-eyebrow">Zero Hunger</div>
+    <h2>The Food Sovereignty Programme</h2>
+    <div class="rule"></div>
+    <p class="sec-lede">Staple food is procured at $30/person/month wholesale — $1.98T/yr at 5.5 billion residents — sourced directly from smallholder farms, not purchased on global commodity markets. The $82/month resident food benefit represents the platform's retail delivery of this wholesale commitment.</p>
+
+    <div class="stat-strip">
+      <div class="stat"><div class="num">96M</div><div class="lbl">Smallholder farms in the sourcing network</div></div>
+      <div class="stat"><div class="num">193M</div><div class="lbl">Hectares under cultivation (13.8% of world arable land)</div></div>
+      <div class="stat"><div class="num">$1.98T</div><div class="lbl">Annual food procurement cost at 5.5B residents ($30/person/month)</div></div>
+      <div class="stat"><a href="https://gkbharta44-code.github.io/Digital-and-Supply-Chain-Income/" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;cursor:pointer" title="View digital income breakeven calculation"><div class="num">$10.62T</div></a><div class="lbl">Digital ad revenue stream funding the $83/month DPR wallet credit</div></div>
+    </div>
+
+    <div class="card-grid">
+      <div class="info-card">
+        <div class="tag">Agent 6 · Precision Agronomy</div>
+        <h3>Farm-to-city in 48 hours</h3>
+        <p>An AI agronomy agent advises each of the 96 million partner farms per crop, per season, in 38 languages — coordinating harvest timing with logistics so staple food reaches resident kitchens within 48 hours of harvest.</p>
+      </div>
+      <div class="info-card">
+        <div class="tag">Wholesale Cost vs. Platform Revenue</div>
+        <h3>$1.98T food cost · $145.49T total platform revenue (Y21)</h3>
+        <p>Actual wholesale food cost (<span class="figure">$1.98T/yr</span>) is 1.4% of total Y21 platform revenue (<span class="figure">$145.49T</span>) — confirming that food coverage is structurally secured many times over, with the Food Sovereignty commitment (<span class="figure">60% of revenue</span>) locked in as a first-priority cost before profit is distributed.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINANCIAL INCLUSION -->
+<section>
+  <div class="wrap">
+    <div class="sec-eyebrow">Financial Inclusion</div>
+    <h2>1.4 billion people, banked for the first time</h2>
+    <div class="rule"></div>
+    <p class="sec-lede">People who have never held a bank account are issued one — not as a grant, but as the natural consequence of joining a platform that pays them to participate. No documentation barrier. No institutional relationship required.</p>
+
+    <div class="card-grid">
+      <div class="info-card">
+        <div class="tag">Onboarding</div>
+        <h3>Verified identity in 30 minutes</h3>
+        <p>KYC screening recognises 11,000+ document types across 220+ countries. A Hyperledger-backed wallet with zero-knowledge-verified identity is issued the same day. 6 billion users onboarded over the programme's first 4 years.</p>
+      </div>
+      <div class="info-card">
+        <div class="tag">Cost to Serve</div>
+        <h3>$28 to onboard · $4/year to maintain</h3>
+        <p>Wallet issuance is a one-time <span class="figure">$28</span> cost; ongoing annual operations run <span class="figure">$4/wallet/year</span> — a cost structure designed to make serving the world's poorest financially viable, not charitable. DPR token is the medium of exchange across all 60 countries and 4,400 cities.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHERE THIS HAPPENS -->
+<section style="background:rgba(75,95,58,.05)">
+  <div class="wrap-wide">
+    <div class="sec-eyebrow">Where This Happens</div>
+    <h2>4,400 cities across 60 countries — 2,200 smart + 2,200 retrofit</h2>
+    <div class="rule"></div>
+    <p class="sec-lede">Every resident benefit above is delivered inside a purpose-built smart city — not retrofitted into existing urban infrastructure. Land, housing, and food systems are designed around the benefit from the ground up. In parallel, 2,200 legacy cities vacated by relocating residents are reclaimed in one-for-one parity, converting the human cost of relocation into a lasting civic asset.</p>
+
+    <div class="region-list">
+      <div class="region-row"><span class="name">South Asia</span><span class="detail">India (545 cities), Bangladesh, Pakistan, Sri Lanka, Nepal, Bhutan, Afghanistan, Maldives</span><span class="count">700 cities</span></div>
+      <div class="region-row"><span class="name">Africa</span><span class="detail">Nigeria (120), Ethiopia, Tanzania, Kenya, Mozambique, Cameroon, Uganda, Ghana, Madagascar + 6 more</span><span class="count">460 cities</span></div>
+      <div class="region-row"><span class="name">SE Asia</span><span class="detail">Indonesia (110), Vietnam, Philippines, Thailand, Myanmar, Cambodia, Malaysia, Laos, Timor-Leste, Brunei</span><span class="count">310 cities</span></div>
+      <div class="region-row"><span class="name">Europe</span><span class="detail">Romania, Poland, Ukraine, Serbia, Bulgaria, Moldova, Albania, Bosnia</span><span class="count">220 cities</span></div>
+      <div class="region-row"><span class="name">Americas</span><span class="detail">Brazil (90), Mexico, Colombia, Argentina, Peru, Ecuador, Bolivia</span><span class="count">240 cities</span></div>
+      <div class="region-row"><span class="name">Middle East</span><span class="detail">Egypt, Turkey, Morocco, Iraq, Saudi Arabia, Jordan, UAE, Lebanon</span><span class="count">180 cities</span></div>
+      <div class="region-row"><span class="name">Pacific</span><span class="detail">Papua New Guinea, Fiji, Solomon Islands, Vanuatu, Samoa</span><span class="count">90 cities</span></div>
+    </div>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>City Specification</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td>Total land per smart city</td><td>5,000 acres</td></tr>
+          <tr><td>Residential cluster</td><td>1,800 acres — housing, utilities, roads</td></tr>
+          <tr><td>Worship &amp; community space</td><td>400 acres</td></tr>
+          <tr><td>Residents per smart city</td><td>2,500,000</td></tr>
+          <tr><td>Construction timeline</td><td>2 years per smart city · 5 years per retrofit city</td></tr>
+          <tr><td>Investment per smart city</td><td>$306.25B · 7% p.a. rental yield = $21.44B/city/yr</td></tr>
+          <tr><td>Investment per retrofit city</td><td>$306.5B · 10% p.a. yield = $30.65B/city/yr from Year 6</td></tr>
+          <tr class="hi"><td>Ownership</td><td>100% platform-owned in perpetuity — cities are never sold, so the benefit commitment cannot be sold away either</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- RETROFIT -->
+<section>
+  <div class="wrap">
+    <div class="sec-eyebrow">Renewal, Not Abandonment</div>
+    <h2>What happens to the city residents leave behind</h2>
+    <div class="rule"></div>
+    <p class="sec-lede">When a population relocates to a completed smart city, the legacy city they leave is not abandoned. Delper reclaims and retrofits it — a second humanitarian commitment, run in one-for-one parity with the smart-city programme, so that renewal follows relocation everywhere it happens.</p>
+
+    <div class="stat-strip">
+      <div class="stat"><div class="num">2,200</div><div class="lbl">Legacy cities reclaimed, one for every smart city completed</div></div>
+      <div class="stat"><div class="num">5 yrs</div><div class="lbl">Build timeline per reclaimed city</div></div>
+      <div class="stat"><div class="num">$306.5B</div><div class="lbl">Retrofit investment per city · 10% p.a. yield</div></div>
+      <div class="stat"><div class="num">$67.43T</div><div class="lbl">Retrofit yield at full 2,200-city scale, per year (Y21+)</div></div>
+    </div>
+
+    <div class="card-grid">
+      <div class="info-card">
+        <div class="tag">Purpose</div>
+        <h3>Second life for legacy infrastructure</h3>
+        <p>Vacated cities are retrofitted into commercial and recreational hubs rather than left to decay — converting the human cost of relocation into a lasting civic asset for the surrounding region, not a discarded one.</p>
+      </div>
+      <div class="info-card">
+        <div class="tag">Funding the Commitment</div>
+        <h3>$67.43T/yr at full 2,200-city scale (Y21)</h3>
+        <p>Retrofit yield is <span class="figure">10% per year</span> on the $306.5B investment (<span class="figure">$30.65B/city/yr</span>) — financed via 25-year Medium Term Notes backed by completed smart-city collateral. Retrofit cities account for <span class="figure">46.3%</span> of total Y21 platform revenue ($67.43T of $145.49T, all five streams).</p>
+      </div>
+    </div>
+    <p style="color:var(--muted);font-size:.82rem;margin-top:8px">No Medium Term Notes have been issued and no reclamation project has commenced. These figures are illustrative forward-looking projections.</p>
+  </div>
+</section>
+
+<!-- EMPLOYMENT -->
+<section style="background:rgba(75,95,58,.05)">
+  <div class="wrap">
+    <div class="sec-eyebrow">Dignified Work</div>
+    <h2>Employment, not just entitlement</h2>
+    <div class="rule"></div>
+    <p class="sec-lede">For residents who work in a city's industries, the $247/month benefit arrives as part of an employment package rather than a standalone payment. Each worker generates $2,430.60/month in gross output; the platform takes a 5% fee ($121.53/month net revenue), retaining $243.06/month as working capital. Employment revenue is a meaningful fifth revenue stream layered onto the four infrastructure streams already described.</p>
+
+    <div class="stat-strip">
+      <div class="stat"><div class="num">2M</div><div class="lbl">Workers employed per smart city</div></div>
+      <div class="stat"><div class="num">$121.53</div><div class="lbl">Net revenue to platform per worker, per month (5% of $2,430.60 gross)</div></div>
+      <div class="stat"><div class="num">$2.92B</div><div class="lbl">Employment revenue per city, per year</div></div>
+      <div class="stat"><div class="num">$6.42T</div><div class="lbl">Employment revenue at 2,200-city scale, per year</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PAYBACK -->
+<section>
+  <div class="wrap">
+    <div class="sec-eyebrow">Capital Payback</div>
+    <h2>How long until 4,400 cities pay for themselves</h2>
+    <div class="rule"></div>
+    <p class="sec-lede">Total construction capital for 2,200 smart cities at $306.25B each: <strong style="color:var(--ink)">$673.75T</strong>. Total retrofit investment for 2,200 reclaimed cities at $306.5B each: <strong style="color:var(--ink)">$674.30T</strong> (financed separately via 25-year MTNs). At full Y21 revenue of <strong style="color:var(--ink)">$145.49T/yr</strong> across all five streams, the smart-city capital is recovered well within the 21-year programme window once all streams are operational.</p>
+
+    <div class="card-grid">
+      <div class="info-card">
+        <div class="tag">Digital + Employment + Supply Chain Only (3-stream baseline)</div>
+        <h3>Narrow revenue base falls short of debt service</h3>
+        <p>Digital ad revenue ($10.62T/yr) plus supply chain (6% fee + 12% profit = 18% combined, $13.86T/yr) plus employment ($6.42T/yr) gives a combined $30.90T/yr at terminal state — well short of the $66.65T/yr required to service the corporate debt stack on its own.</p>
+      </div>
+      <div class="info-card" style="border-color:var(--olive)">
+        <div class="tag" style="color:var(--olive)">Full 5-Stream Revenue Stack</div>
+        <h3>$145.49T/yr at Y21 — 2.18× debt service</h3>
+        <p>Adding smart-city rental ($47.16T/yr) and retrofit yield ($67.43T/yr) delivers <span class="figure">$145.49T/yr</span> total by Y21. Required annual debt service on a 25-year FSG loan at 1.8% covering the $1,332.41T total debt stack is <span class="figure">$66.65T/yr</span> — covered at 2.18× at full operational scale. Corporate DSCR: <span class="figure">2.26× (Y21 actual) / 2.18× (full steady-state)</span>.</p>
+      </div>
+    </div>
+    <p style="color:var(--muted);font-size:.85rem;margin-top:20px">The retrofit programme ($306.5B × 2,200 cities = $674.30T) is financed separately via 25-year Medium Term Notes and is not included in the smart-city debt service calculation above. Retrofit MTN DSCR: 199,935×.</p>
+  </div>
+</section>
+
+<!-- LOAN SERVICEABILITY -->
+<section style="background:rgba(75,95,58,.05)">
+  <div class="wrap">
+    <div class="sec-eyebrow">Financing Structure</div>
+    <h2>Would a sovereign-guaranteed loan actually cover this?</h2>
+    <div class="rule"></div>
+    <p class="sec-lede">A payback period isn't the same question as a loan's serviceability. A loan carries scheduled annual debt service — principal and interest — so what matters is whether yearly revenue covers that payment, not just whether cumulative revenue eventually exceeds total capital.</p>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Structure</th><th>Required Annual Debt Service</th><th>Revenue Available (Y21)</th><th>Coverage</th></tr></thead>
+        <tbody>
+          <tr><td>Digital + employment + supply chain only (no rental, no retrofit)</td><td>$66.65T/yr (25yr/1.8% annuity on full debt stack)</td><td>$30.90T/yr</td><td style="color:var(--clay);font-weight:700">0.46× — fails</td></tr>
+          <tr class="hi"><td>25-year FSG loan @ 1.8%, full 5-stream revenue (digital + supply chain + employment + smart rental + retrofit yield)</td><td>$66.65T/yr</td><td>$145.49T/yr</td><td style="color:var(--olive);font-weight:700">2.18× — covers</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card-grid" style="margin-top:8px">
+      <div class="info-card">
+        <div class="tag">Why Rental Income is the Decisive Factor</div>
+        <h3>Smart city rental ($47.16T/yr) tips the balance</h3>
+        <p>Smart city rental at 7% yield on $306.25B per city delivers $21.44B/city/yr — $47.16T/yr across 2,200 cities at Y21. Without this stream plus retrofit yield, digital + employment + supply chain revenue ($30.90T/yr) covers less than half of required debt service. With them, total revenue covers debt service at 2.18× and the programme is financeable on standard 25-year sovereign guarantee terms.</p>
+      </div>
+      <div class="info-card" style="border-color:var(--olive)">
+        <div class="tag" style="color:var(--olive)">A Realistic Tenor with Real-World Precedent</div>
+        <h3>25 years — fits standard sovereign guarantee practice</h3>
+        <p>Sovereign guarantees on infrastructure debt typically max out around 25–40 years, matching real concession periods. The 25-year structure needs no political-continuity exception, covers debt service at 2.18× once all five revenue streams are counted, and aligns with the Full Sovereign Guarantee (FSG) model documented throughout this programme.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FUNDING TABLE -->
+<section>
+  <div class="wrap">
+    <div class="sec-eyebrow">Supporting Detail</div>
+    <h2>How the commitment is funded — 5 Revenue Streams (Y21)</h2>
+    <div class="rule"></div>
+    <p class="sec-lede">The humanitarian programme is not funded by donations or government subsidy. It is funded directly from platform revenue, before any profit is distributed. All five streams are booked in the verified 21-Year Financial Model.</p>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Revenue Stream</th><th>Year 21 Value</th><th>Mechanism</th></tr></thead>
+        <tbody>
+          <tr><td>Digital ad / survey revenue</td><td>$10.62T/yr</td><td>$83.33/user/month × 6B users — funds $83 DPR wallet credit per resident, tax-free</td></tr>
+          <tr><td>Supply chain (facilitation + profit)</td><td>$13.86T/yr</td><td>6% facilitation fee + 12% profit share (18% combined) on ecosystem throughput</td></tr>
+          <tr><td>Smart city rental</td><td>$47.16T/yr</td><td>$21.44B/city/yr (7% yield on $306.25B investment) × 2,200 cities</td></tr>
+          <tr><td>Retrofit city yield</td><td>$67.43T/yr</td><td>$30.65B/city/yr (10% yield on $306.5B) × 2,200 retrofit cities (full Y21 parity)</td></tr>
+          <tr><td>Employment / industrial revenue</td><td>$6.42T/yr</td><td>2M workers × $121.53/mo net revenue (5% of $2,430.60 gross) × 2,200 cities</td></tr>
+          <tr class="hi"><td>Total revenue (5 streams)</td><td>$145.49T/yr</td><td>Verified sum of all five streams at Y21</td></tr>
+          <tr><td>Food Sovereignty commitment (60% of revenue)</td><td>$87.29T/yr</td><td>First-priority allocation — actual wholesale food cost is only $1.98T/yr, leaving substantial buffer</td></tr>
+          <tr><td>City operating costs</td><td>$11.00T/yr</td><td>$5B/city/yr × 2,200 smart cities</td></tr>
+          <tr class="hi"><td>Net operating profit</td><td>$47.20T/yr</td><td>After food commitment and city ops — humanitarian benefit is a first-priority cost</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="support-note" style="margin-bottom:20px">
+      The retrofit / urban renewal yield (<strong>$67.43T/yr</strong> at full 2,200-city parity, Y21) is the single largest revenue stream and is financed separately via 25-year Medium Term Notes — Retrofit MTN DSCR: <strong>199,935×</strong>.
+    </div>
+
+    <div class="support-note">
+      Terminal EV (Year 22, true full-programme basis — all 4,400 cities operational): <strong>$1,011.38T</strong> · DPR Token: <strong>$510.80</strong> · GK Bharta Net Worth: <strong>$896.48T</strong> (30% equity $303.41T + token balance $707.97T net of equity overlap − $114.90T liabilities). All terminal figures are derived from the 21-Year Financial Model and represent the state when all 2,200 smart cities AND all 2,200 retrofit cities are simultaneously fully operational. See <a href="https://gkbharta44-code.github.io/Delper-Ecom-Story/" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">Delper GCCP Holdings</a> v10.3 master document for the full derivation.
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <h4>Scope &amp; Disclaimer</h4>
+    <p>This profile describes Delper's Humanitarian Architecture as set out in <a href="https://gkbharta44-code.github.io/Delper-Ecom-Story/" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">Delper GCCP Holdings</a> v10.3 (July 2026). All figures — including the $247/month resident benefit, Food Sovereignty Programme ($30/person/month wholesale, $1.98T/yr actual cost; 60% of revenue commitment), Financial Inclusion costs, city counts, 5-stream revenue model ($145.49T/yr at Y21), and supporting financial figures — are illustrative forward-looking projections only. They are not guarantees of future performance, and actual results may differ materially, including to zero.</p>
+    <p>Revenue figures in this document are aligned to <a href="https://gkbharta44-code.github.io/Delper-Ecom-Story/" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">Delper GCCP Holdings</a> v10.3, which uses: smart city rental at 7% yield ($21.44B/city/yr, $47.16T/yr total), supply chain at 18% combined ($13.86T/yr — 6% facilitation fee + 12% profit share), and employment net revenue at $121.53/worker/month (5% take-rate on $2,430.60/month gross output, $6.42T/yr at 2,200 cities). Terminal EV, DPR Token Price, and GK Bharta Net Worth figures reflect the v10.3 Year 22 true terminal state.</p>
+    <p>No cities are currently under construction. Land acquisition, government approvals, regulatory clearances, and financing remain to be secured. No binding commitments have been made by any bank, institution, government, or counterparty. This document does not constitute an offer to sell or a solicitation to buy any securities, tokens, or financial instruments.</p>
+    <div class="meta"><a href="https://gkbharta44-code.github.io/Delper-Ecom-Story/" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">Delper GCCP Holdings</a> · Singapore · GK Bharta, Founder &amp; Chairman · July 2026 · v10.3 Aligned</div>
+  </div>
+</footer>
+
+</body>
+</html>
